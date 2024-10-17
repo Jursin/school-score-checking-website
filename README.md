@@ -23,9 +23,9 @@ pip install openpyxl
 
 > [!tip]
 > **镜像源**
-> ```
+```
 https://pypi.tuna.tsinghua.edu.cn/simple
-> ```
+```
 
 ## 运行
 
@@ -39,5 +39,7 @@ https://pypi.tuna.tsinghua.edu.cn/simple
 
 > [!important]
 > **适用于以下网站**
+>
 > 易查分：https://www.yichafen.com/
+>
 > 智慧查分：https://www.zhihuichafen.cn/ （未测试）

@@ -12,33 +12,37 @@ def create_gui():
     root = tk.Tk()
     root.title("成绩抓取")
 
-    tk.Label(root, text="输入网址:").grid(row=0, column=0)
+    tk.Label(root, text="输入网址:").grid(row=0, column=0, padx=10, pady=10)
     url_entry = tk.Entry(root, width=50)
-    url_entry.grid(row=0, column=1)
+    url_entry.grid(row=0, column=1, padx=10, pady=10)
 
     def select_excel():
         file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx")])
         excel_entry.delete(0, tk.END)
         excel_entry.insert(0, file_path)
 
-    tk.Label(root, text="选择Excel文件:").grid(row=1, column=0)
+    tk.Label(root, text="选择Excel文件:").grid(row=1, column=0, padx=10, pady=10)
     excel_entry = tk.Entry(root, width=50)
-    excel_entry.grid(row=1, column=1)
-    tk.Button(root, text="选择文件", command=select_excel).grid(row=1, column=2)
+    excel_entry.grid(row=1, column=1, padx=10, pady=10)
+    tk.Button(root, text="选择文件", command=select_excel).grid(row=1, column=2, padx=10, pady=10)
 
     def select_output():
         folder_path = filedialog.askdirectory()
         output_entry.delete(0, tk.END)
         output_entry.insert(0, folder_path)
 
-    tk.Label(root, text="选择输出文件夹:").grid(row=2, column=0)
+    tk.Label(root, text="选择输出文件夹:").grid(row=2, column=0, padx=10, pady=10)
     output_entry = tk.Entry(root, width=50)
-    output_entry.grid(row=2, column=1)
-    tk.Button(root, text="选择文件夹", command=select_output).grid(row=2, column=2)
+    output_entry.grid(row=2, column=1, padx=10, pady=10)
+    tk.Button(root, text="选择文件夹", command=select_output).grid(row=2, column=2, padx=10, pady=10)
 
-    tk.Label(root, text="输出文件名:").grid(row=3, column=0)
+    tk.Label(root, text="输出文件名:").grid(row=3, column=0, padx=10, pady=10)
     filename_entry = tk.Entry(root, width=50)
-    filename_entry.grid(row=3, column=1)
+    filename_entry.grid(row=3, column=1, padx=10, pady=10)
+
+    # 创建一个 Frame 用于存放按钮
+    button_frame = tk.Frame(root)
+    button_frame.grid(row=4, column=0, columnspan=3, pady=20)
 
     def on_submit():
         url = url_entry.get()
@@ -48,7 +52,12 @@ def create_gui():
         root.destroy()
         main_process(url, excel_file, output_folder, filename)
 
-    tk.Button(root, text="开始抓取", command=on_submit).grid(row=4, column=1)
+    # 创建"开始抓取"按钮并设置大小、间距
+    submit_button = tk.Button(button_frame, text="开始抓取", command=on_submit, width=15)
+    submit_button.pack(side=tk.LEFT, padx=10)
+
+    cancel_button = tk.Button(button_frame, text="取消", command=root.quit, width=15)
+    cancel_button.pack(side=tk.LEFT, padx=10)
 
     root.mainloop()
 
@@ -66,14 +75,14 @@ def main_process(url, excel_file, output_folder, filename):
         for index, row in df.iterrows():
             data1 = row[1]  # 从 Excel 表格中读取第二列的值
             data2 = str(row[2])[-4:]  # 从 Excel 表格中读取第三列的后四位
-    
+
             # 定位并输入数据到网页的输入框中
             input1 = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.NAME, 's_xingming')))  # 定位第一个输入框
             input2 = driver.find_element(By.NAME, 's_chaxunma')  # 定位第二个输入框
 
             input1.clear()  # 清除第一个输入框中的内容
             input2.clear()  # 清除第二个输入框中的内容
-    
+
             input1.send_keys(str(data1))  # 将 data1 输入到第一个输入框
             input2.send_keys(str(data2))  # 将 data2 输入到第二个输入框
 
